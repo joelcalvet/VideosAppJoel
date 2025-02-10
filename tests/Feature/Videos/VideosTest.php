@@ -1,6 +1,7 @@
 <?php
 namespace Tests\Feature\Videos;
 
+use Carbon\Carbon;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 use App\Helpers\VideoHelper;
@@ -17,7 +18,7 @@ class VideosTest extends TestCase
             title: 'Vegeta 777',
             description: 'Es el mejor youtuber',
             url: 'https://www.youtube.com/embed/oM9fUlGET-w?si=mrCctV-Ilp3OXKbI',
-            publishedAt: now(),
+            publishedAt: Carbon::now(),
         );
 
         // Realitzar una petició per veure el vídeo
@@ -30,6 +31,8 @@ class VideosTest extends TestCase
         $response->assertSee($video->title);
         $response->assertSee($video->description);
         $response->assertSee($video->url);
+        $this->assertEquals('Tests\\Feature\\Videos\\VideosTest', $video->testedBy());
+
     }
 
     #[Test] public function users_cannot_view_not_existing_videos()

@@ -1,3 +1,4 @@
+@php use Carbon\Carbon; @endphp
 <x-videos-app-layout>
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -10,8 +11,10 @@
 
                 {{-- Informació de publicació --}}
                 <div class="text-sm text-gray-500 mb-6">
-                    <p><span class="font-semibold">Publicat:</span> {{ $video->formatted_published_at }}</p>
-                    <p>{{ $video->formatted_for_humans_published_at }}</p>
+                    <p><span
+                            class="font-semibold">Publicat:</span> {{ Carbon::parse($video->published_at)->format('jS \o\f F, Y') }}
+                    </p>
+                    <p>{{ Carbon::parse($video->published_at)->diffForHumans() }}</p>
                 </div>
 
                 {{-- Contenidor del vídeo --}}

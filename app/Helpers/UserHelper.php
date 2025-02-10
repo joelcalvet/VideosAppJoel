@@ -8,6 +8,60 @@ use Illuminate\Support\Facades\Hash;
 
 class UserHelper
 {
+    public static function create_superadmin_user()
+    {
+        $user = User::firstOrCreate(
+            ['email' => 'superadmin@videosapp.com'],
+            [
+                'name' => 'Super Admin',
+                'password' => Hash::make('password'),
+                'super_admin' => true,
+            ]
+        );
+
+        // Assignar tots els permisos al superadmin si és necessari
+        if (!$user->hasPermissionTo('manage videos')) {
+            $user->givePermissionTo('manage videos');
+        }
+
+        return $user;
+    }
+
+
+    public static function create_regular_user()
+    {
+        $user = User::firstOrCreate(
+            ['email' => 'regularuser@videosapp.com'],
+            [
+                'name' => 'Regular User',
+                'password' => Hash::make('password'),
+            ]
+        );
+
+        // Assegurar que no té permisos d'administració
+        $user->syncPermissions([]); // Buida tots els permisos si en tenia algun
+
+        return $user;
+    }
+
+
+    public static function create_video_manager_user()
+    {
+        $user = User::firstOrCreate(
+            ['email' => 'videomanager@videosapp.com'],
+            [
+                'name' => 'Video Manager',
+                'password' => Hash::make('password'),
+            ]
+        );
+
+        // Afegir permís
+        $user->givePermissionTo('manage videos');
+
+        return $user;
+    }
+
+
     public static function createDefaultUser()
     {
         if (!User::where('email', config('users.default.email'))->exists()) {
@@ -15,16 +69,10 @@ class UserHelper
                 'name' => config('users.default.name'),
                 'email' => config('users.default.email'),
                 'password' => Hash::make(config('users.default.password')),
+                'super_admin' => false,
             ]);
 
-            $team = Team::forceCreate([
-                'name' => $user->name.' Team',
-                'user_id' => $user->id,
-                'personal_team' => true,
-            ]);
-
-            $user->current_team_id = $team->id;
-            $user->save();
+            TeamHelper::addPersonalTeam($user);
 
             return $user;
         }
@@ -37,16 +85,10 @@ class UserHelper
                 'name' => config('users.teacher.name'),
                 'email' => config('users.teacher.email'),
                 'password' => Hash::make(config('users.teacher.password')),
+                'super_admin' => true,
             ]);
 
-            $team = Team::forceCreate([
-                'name' => $teacher->name.' Team',
-                'user_id' => $teacher->id,
-                'personal_team' => true,
-            ]);
-
-            $teacher->current_team_id = $team->id;
-            $teacher->save();
+            TeamHelper::addPersonalTeam($teacher);
 
             return $teacher;
         }

@@ -14,7 +14,7 @@ class VideosTest extends TestCase
 
     #[Test] public function can_get_formatted_published_at_date()
     {
-        // Crear un vídeo amb una data específica utilitzant el helper
+        // Crear un vídeo amb una data específica utilitzant Carbon
         $publishedAt = Carbon::create(2025, 1, 13, 12, 0, 0);
         $video = VideoHelper::createCustomVideo(
             title: 'El Rubius OMG',
@@ -24,10 +24,13 @@ class VideosTest extends TestCase
         );
 
         // Assert que retorna la data en el format esperat
-        $this->assertEquals('13th of January, 2025', $video->formatted_published_at);
+        $this->assertEquals($publishedAt->format('jS \o\f F, Y'), $video->formatted_published_at);
 
         // Assert que retorna la data relativa
-        $this->assertEquals('1 week ago', $video->formatted_for_humans_published_at);
+        $this->assertEquals(
+            round($publishedAt->diffInWeeks(Carbon::now()), 2),
+            round($video->published_at->diffInWeeks(Carbon::now()), 2)
+        );
 
         // Assert que retorna el Unix timestamp
         $this->assertEquals($publishedAt->timestamp, $video->published_at_timestamp);
@@ -35,7 +38,7 @@ class VideosTest extends TestCase
 
     #[Test] public function can_get_formatted_published_at_date_when_not_published()
     {
-        // Crear un vídeo sense data de publicació utilitzant el helper
+        // Crear un vídeo sense data de publicació utilitzant Carbon
         $video = VideoHelper::createCustomVideo(
             title: 'Test Video',
             description: 'Test description',

@@ -1,3 +1,4 @@
+@php use Carbon\Carbon; @endphp
 <x-videos-app-layout>
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -11,7 +12,8 @@
                             </a>
                         </h2>
                         <p class="text-gray-600">{{ $video->description }}</p>
-                        <p class="text-sm text-gray-500 mt-2">Published: {{ $video->formatted_published_at }}</p>
+                        <p class="text-sm text-gray-500 mt-2">
+                            Published: {{ Carbon::parse($video->published_at)->format('jS \o\f F, Y') }}</p>
                     </div>
                 @endforeach
             </div>

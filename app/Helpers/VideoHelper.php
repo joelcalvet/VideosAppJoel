@@ -27,7 +27,7 @@ class VideoHelper
             'title' => $title,
             'description' => $description,
             'url' => $url,
-            'published_at' => $publishedAt,
+            'published_at' => $publishedAt ? Carbon::parse($publishedAt) : null,
             'previous' => $previous,
             'next' => $next,
             'series_id' => $seriesId,

@@ -27,17 +27,23 @@ class Video extends Model
     public function getFormattedPublishedAtAttribute()
     {
         return $this->published_at
-            ? $this->published_at->format('jS \o\f F, Y') // Exemple: "13th of January, 2025"
+            ? Carbon::parse($this->published_at)->format('jS \o\f F, Y') // Exemple: "13th of January, 2025"
             : null;
     }
 
     public function getFormattedForHumansPublishedAtAttribute()
     {
-        return $this->published_at ? $this->published_at->diffForHumans() : null;
+        return $this->published_at ? Carbon::parse($this->published_at)->diffForHumans() : null;
     }
 
     public function getPublishedAtTimestampAttribute()
     {
-        return $this->published_at ? $this->published_at->timestamp : null;
+        return $this->published_at ? Carbon::parse($this->published_at)->timestamp : null;
+    }
+
+    public function testedBy()
+    {
+        // Retorna el nom de la classe del test directament
+        return 'Tests\\Feature\\Videos\\VideosTest';
     }
 }

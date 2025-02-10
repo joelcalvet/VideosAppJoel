@@ -47,6 +47,17 @@ class HelperTest extends TestCase
         $this->assertTrue(password_verify('password123', $teacherUser->password));
         $this->assertNotNull($teacherUser->teams()->first());
         $this->assertTrue($teacherUser->teams()->first()->personal_team);
+
+        $this->assertDatabaseHas('teams', [
+            'name' => 'Default User Team',
+            'user_id' => $defaultUser->id,
+            'personal_team' => true,
+        ]);
+        $this->assertDatabaseHas('teams', [
+            'name' => 'Default Teacher Team',
+            'user_id' => $teacherUser->id,
+            'personal_team' => true,
+        ]);
     }
 
     public function test_create_default_video()
