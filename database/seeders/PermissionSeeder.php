@@ -36,6 +36,5 @@ class PermissionSeeder extends Seeder
             'name' => 'super-admin',
             'guard_name' => 'web'
         ]);
-        // Afegir altres rols si és necessari
     }
 }

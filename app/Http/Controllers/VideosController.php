@@ -17,4 +17,9 @@ class VideosController extends Controller
     {
         return view('videos.show', compact('video'));
     }
+
+    public function testedBy(Video $video)
+    {
+        return $video->testedBy();
+    }
 }
