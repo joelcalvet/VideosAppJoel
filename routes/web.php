@@ -20,12 +20,3 @@ Route::middleware([
 
 Route::get('/videos', [VideosController::class, 'index'])->name('videos.index');
 Route::get('/videos/{video}', [VideosController::class, 'show'])->name('videos.show');
-
-Route::middleware(['auth'])->group(function () {
-    Route::get('/videos/manage', function () {
-        if (!Gate::allows('manage-videos')) {
-            abort(403);
-        }
-        return view('videos.manage');
-    })->name('videos.manage');
-});
