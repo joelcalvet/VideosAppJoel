@@ -9,7 +9,7 @@ class VideoHelper
 {
     public static function createDefaultVideo()
     {
-        return Video::create([
+        Video::create([
             'title' => 'Godzilla',
             'description' => 'Llangardaix enorme que destrueix tot a la seva passada.',
             'url' => 'https://www.youtube.com/embed/guPwQO9ww20?si=NW5hp55HNaY-DRsj',
@@ -18,7 +18,28 @@ class VideoHelper
             'next' => null,
             'series_id' => null,
         ]);
+
+        Video::create([
+            'title' => 'Man Loses Temper with Printer',
+            'description' => 'Persona en problemes de paciència amb una impressora.',
+            'url' => 'https://www.youtube.com/embed/ZSljO3DqDDU?si=5BIruzHV9IJsXSf5',
+            'published_at' => Carbon::now(),
+            'previous' => null,
+            'next' => null,
+            'series_id' => null,
+        ]);
+
+        Video::create([
+            'title' => 'Orangutan Driving Golf Cart',
+            'description' => 'Orangutan conduint un carret de golf amb una destresa excepcional, maginífic.',
+            'url' => 'https://www.youtube.com/embed/RZ_0ImDYrPY?si=WaDRzTE0nAJyq3ym',
+            'published_at' => Carbon::now(),
+            'previous' => null,
+            'next' => null,
+            'series_id' => null,
+        ]);
     }
+
 
     public static function createCustomVideo($title, $description, $url,
                                              $publishedAt = null, $previous = null, $next = null, $seriesId = null)

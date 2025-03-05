@@ -67,3 +67,44 @@ VideosApp és una aplicació per gestionar vídeos. Utilitzem TDD i AAA per gara
 
 ## Verificar tots els fitxers creats amb Larastan
 
+## Noves funcionalitats implementades
+
+- Comprovar que els usuaris amb permisos puguin accedir a la ruta `/videosmanage`.
+- Crear `VideosManageController` amb les funcions: `testedBy`, `index`, `store`, `show`, `edit`, `update`, `delete`, `destroy`.
+- Afegir funció `index` a `VideosController`.
+- Revisar que hi hagi 3 vídeos creats a `helpers` i afegits al `DatabaseSeeder`.
+- Crear les vistes del CRUD amb permisos adequats:
+    - `resources/views/videos/manage/index.blade.php`
+    - `resources/views/videos/manage/create.blade.php`
+    - `resources/views/videos/manage/edit.blade.php`
+    - `resources/views/videos/manage/delete.blade.php`
+- Afegir taula del CRUD de vídeos a `index.blade.php`.
+- Afegir formulari amb atribut `data-qa` a `create.blade.php`.
+- Afegir confirmació d'eliminació a `delete.blade.php`.
+- Crear `resources/views/videos/index.blade.php` per veure tots els vídeos i accedir al detall.
+- Modificar el test `user_with_permissions_can_manage_videos()` per incloure 3 vídeos.
+- Crear i assignar permisos de vídeos per al CRUD als usuaris corresponents.
+- Afegir tests a `VideoTest`:
+    - `user_without_permissions_can_see_default_videos_page`
+    - `user_with_permissions_can_see_default_videos_page`
+    - `not_logged_users_can_see_default_videos_page`
+- Afegir tests a `VideosManageControllerTest`:
+    - `user_with_permissions_can_see_add_videos`
+    - `user_without_videos_manage_create_cannot_see_add_videos`
+    - `user_with_permissions_can_store_videos`
+    - `user_without_permissions_cannot_store_videos`
+    - `user_with_permissions_can_destroy_videos`
+    - `user_without_permissions_cannot_destroy_videos`
+    - `user_with_permissions_can_see_edit_videos`
+    - `user_without_permissions_cannot_see_edit_videos`
+    - `user_with_permissions_can_update_videos`
+    - `user_without_permissions_cannot_update_videos`
+    - `user_with_permissions_can_manage_videos`
+    - `regular_users_cannot_manage_videos`
+    - `guest_users_cannot_manage_videos`
+    - `superadmins_can_manage_videos`
+- Crear rutes de `videos/manage` amb middleware corresponent.
+- Mostrar rutes del CRUD només per a usuaris logejats, mentre que la d'índex és accessible per tothom.
+- Afegir `navbar` i `footer` a `resources/layouts/videosapp`.
+- Comprovar tots els fitxers creats amb `Larastan`.
+

@@ -19,7 +19,6 @@ class UserHelper
             ]
         );
 
-        // Assignar tots els permisos al superadmin si és necessari
         if (!$user->hasPermissionTo('manage videos')) {
             $user->givePermissionTo('manage videos');
         }
@@ -38,7 +37,6 @@ class UserHelper
             ]
         );
 
-        // Assegurar que no té permisos d'administració
         $user->syncPermissions([]); // Buida tots els permisos si en tenia algun
 
         return $user;
@@ -56,7 +54,9 @@ class UserHelper
         );
 
         // Afegir permís
-        $user->givePermissionTo('manage videos');
+        if (!$user->hasPermissionTo('manage videos')) {
+            $user->givePermissionTo('manage videos');
+        }
 
         return $user;
     }
